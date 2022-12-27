@@ -1,0 +1,56 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+      - id: check-yaml
+        args: [--unsafe]
+        stages: [commit]
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v2.25.0
+    hooks:
+      - id: commitizen
+        stages: [commit-msg]
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 5.0.4
+    hooks:
+      - id: flake8
+        args:
+          - --extend-ignore
+          - W191
+          - --extend-ignore
+          - E203
+          - --per-file-ignores
+          - "src/predict/utils_load_model.py: E501"
+        name: flake8 (python)
+        language: python
+        language_version: python3
+        types_or: [python]
+        stages: [commit]
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        args:
+          - --profile
+          - black
+          - -l 79
+          - -v
+          - --skip
+          - env_test
+          - --skip
+          - venv
+        language: python
+        language_version: python3
+        types_or: [python]
+        stages: [commit]
+  - repo: https://github.com/ambv/black
+    rev: 22.3.0
+    hooks:
+      - id: black
+        args:
+          - -l 79
+        language_version: python3
+        types_or: [python]
+        stages: [commit]
