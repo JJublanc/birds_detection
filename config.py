@@ -1,0 +1,5 @@
+INPUT_IMAGES_FOLDER = "./data/input_images"
+IMAGES_WITH_DETECTION_FOLDER = "./data/images_with_detection_boxes"
+DETECTION_INFO_FOLDER = "./data/detection_info"
+METADATA_INFO_FOLDER = "./data/images_metadata"
+PREPARED_IMAGES = "./app/prepared_images"

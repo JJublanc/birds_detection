@@ -1,4 +1,5 @@
 import os
+from typing import List
 
 import numpy as np
 import tensorflow as tf
@@ -8,6 +9,7 @@ from PIL.ExifTags import TAGS
 from six import BytesIO
 from six.moves.urllib.request import urlopen
 
+from config import IMAGES_WITH_DETECTION_FOLDER, INPUT_IMAGES_FOLDER
 from src.predict.utils_load_model import (
     COCO17_HUMAN_POSE_KEYPOINTS,
     category_index,
@@ -25,7 +27,7 @@ def extract_metadata(image):
         tagname = TAGS.get(tagid, tagid)
 
         # passing the tagid to get its respective value
-        value = exifdata.get(tagid)
+        value = str(exifdata.get(tagid))
 
         # printing the final result
         metadata[tagname] = value
@@ -33,20 +35,7 @@ def extract_metadata(image):
     return metadata
 
 
-def load_image_into_numpy_array(path):
-    """Load an image from file into a numpy array.
-
-    Puts image into numpy array to feed into tensorflow graph.
-    Note that by convention we put it into a numpy array with shape
-    (height, width, channels), where channels=3 for RGB.
-
-    Args:
-      path: the file path to the image
-
-    Returns:
-      uint8 numpy array with shape (img_height, img_width, 3)
-    """
-    image = None
+def get_metadata_and_image_as_numpy_array(path):
     if path.startswith("http"):
         response = urlopen(path)
         image_data = response.read()
@@ -59,6 +48,7 @@ def load_image_into_numpy_array(path):
     metadata = extract_metadata(image)
 
     (im_width, im_height) = image.size
+
     return (
         np.array(image.getdata())
         .reshape((1, im_height, im_width, 3))
@@ -67,18 +57,20 @@ def load_image_into_numpy_array(path):
     )
 
 
-def load_all_untreated_images():
-    path_input = "./data_input"
-    path_output = "./data_output"
-    picture_path_list = [file for file in os.listdir(path_input)]
-    results_path_list = [file for file in os.listdir(path_output)]
+def get_all_untreated_images_list() -> List:
+    input_images_list = [file for file in os.listdir(INPUT_IMAGES_FOLDER)]
+    images_with_detection_list = [
+        file for file in os.listdir(IMAGES_WITH_DETECTION_FOLDER)
+    ]
 
-    images = []
-    for file in picture_path_list:
-        if file not in results_path_list:
-            images.append(os.path.join(path_input, file))
+    all_untreated_images_path_list = []
+    for file in input_images_list:
+        if file not in images_with_detection_list:
+            all_untreated_images_path_list.append(
+                os.path.join(INPUT_IMAGES_FOLDER, file)
+            )
 
-    return images
+    return all_untreated_images_path_list
 
 
 def transform_image(
@@ -95,8 +87,8 @@ def transform_image(
         ).astype(np.uint8)
 
 
-def add_results_to_image_and_save(image_np, results):
-    result = {key: value.numpy() for key, value in results.items()}
+def add_detection_info_to_image(image_np, detection_results):
+    result = {key: value.numpy() for key, value in detection_results.items()}
 
     label_id_offset = 0
     image_np_with_detections = image_np.copy()
