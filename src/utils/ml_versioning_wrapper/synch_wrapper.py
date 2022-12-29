@@ -4,6 +4,8 @@ import os
 import git
 import mlflow
 
+from typing import Any
+
 from src.utils.ml_versioning_wrapper.py_commit import check_branch, commit_code
 
 
@@ -11,7 +13,7 @@ def tracking_wrapper(func):
     def wrapper(
         experiment_branch: str = "main",
         wrapper_experiment_name: str = "default_model",
-        tracking_uri: str = ".",
+        tracking_uri: Any = None,
         *args,
         **kwargs,
     ):
@@ -40,7 +42,7 @@ def tracking_wrapper(func):
         #####################
         # Set mlflow params #
         #####################
-
+        mlflow.set_tracking_uri(tracking_uri)
         mlflow.set_experiment(wrapper_experiment_name)
 
         with mlflow.start_run():

@@ -140,6 +140,5 @@ def main_detect_object():
 if __name__ == "__main__":
 	main_detect_object(
 		experiment_branch="main",
-		wrapper_experiment_name="object_detection",
-		tracking_uri="./"
+		wrapper_experiment_name="object_detection"
 	)
