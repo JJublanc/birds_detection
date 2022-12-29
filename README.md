@@ -6,7 +6,7 @@ Source : https://www.tensorflow.org/hub/tutorials/tf2_object_detection
 requirement : poetry, pyenv
 ```
 pyenv install 3.9.1
-pyenv local 3.9.1 
+pyenv local 3.9.1
 poetry config virtualenvs.in-project true
 pyenv which python | xargs poetry env use
 poetry install
@@ -22,7 +22,7 @@ cd ../..
 poetry add ./models/research/
 ```
 # Known issue
-A file is missing in protobuf package : just add it as explain here : 
+A file is missing in protobuf package : just add it as explain here :
 https://stackoverflow.com/questions/71759248/importerror-cannot-import-name-builder-from-google-protobuf-internal
 
 # Process images
