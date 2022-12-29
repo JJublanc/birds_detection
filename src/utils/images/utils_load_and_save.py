@@ -50,3 +50,6 @@ def load_image_and_detect_objects(image_path, detection_model):
     detection_information = detection_model(image_np)
 
     return image_np, detection_information, image_name
+
+def save_np_array_as_jpeg(image_np, path):
+    Image.fromarray(image_np).save(path)
