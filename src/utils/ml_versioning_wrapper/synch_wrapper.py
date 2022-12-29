@@ -1,10 +1,9 @@
 import logging
 import os
+from typing import Any
 
 import git
 import mlflow
-
-from typing import Any
 
 from src.utils.ml_versioning_wrapper.py_commit import check_branch, commit_code
 

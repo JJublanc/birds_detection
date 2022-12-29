@@ -1,13 +1,12 @@
 # https://www.tensorflow.org/tutorials/structured_data/time_series
 import time
+from pathlib import Path
 from typing import List, Union
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-
-from pathlib import Path
 
 
 class WindowGenerator:
@@ -131,11 +130,7 @@ class WindowGenerator:
             self._example = result
         return result
 
-    def plot(self,
-             model,
-             plot_col,
-             max_subplots,
-             plot_folder):
+    def plot(self, model, plot_col, max_subplots, plot_folder):
         inputs, labels = self.example
         plt.figure(figsize=(12, 8))
         plot_col_index = self.column_indices[plot_col]

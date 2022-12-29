@@ -33,9 +33,11 @@ def extract_metadata(image):
 
 def convert_image_to_np_array(image):
     (im_width, im_height) = image.size
-    return np.array(image.getdata())\
-             .reshape((1, im_height, im_width, 3))\
-             .astype(np.uint8)
+    return (
+        np.array(image.getdata())
+        .reshape((1, im_height, im_width, 3))
+        .astype(np.uint8)
+    )
 
 
 def get_all_untreated_images_list() -> List:

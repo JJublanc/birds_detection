@@ -25,10 +25,11 @@ class Preprocessor:
         self.add_trend_and_season = func_trend_and_season
         self.get_clean_date_index = func_clean_date_index
 
-        #TODO: separate 3 type of preprocess :
+        # TODO: separate 3 type of preprocess :
         # 1/ cleaning : format transformation, dropping, etc. [often generic]
         # 2/ scaling
-        # 3/ feature engineering : augmentation, embedding, etc. [often specific]
+        # 3/ feature engineering : augmentation,
+        # embedding, etc. [often specific]
 
     def augment_data(self, data: pd.DataFrame) -> pd.DataFrame:
         """
