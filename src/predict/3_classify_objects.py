@@ -1,25 +1,40 @@
-import tensorflow as tf
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
-from glob import glob
-import tensorflow_hub as hub
-import tensorflow_datasets as tfds
-from keras.preprocessing import image
-from tensorflow.keras import layers
+import os
 
+import numpy as np
+import pandas as pd
+import tensorflow as tf
+import tensorflow_hub as hub
+
+from config import OBJECT_DETECTED_FOLDER
 from src.utils.images.utils_load_and_save import load_image_as_np_array
 
-
-if __name__=="__main__":
-	URL = 'https://tfhub.dev/google/aiy/vision/classifier/birds_V1/1'               # Import pre-trained bird classification model from Tensorflow Hub
-	#bird_model = hub.KerasLayer(URL, input_shape=(IMAGE_RES,IMAGE_RES,3))                 # Using aiy/vision/classifier/birds_V1 classifying 964 bird species from images. It is based on MobileNet, and trained on photos contributed by the iNaturalist community
-	#bird_model.trainable=False
-
-	bird_model = hub.load(URL)
-
-	image_path = "/Users/johanjublanc/DataScienceProjects/birds_project/data/5_object_detected/test_oiseau/object_0_bird.png"
-	load_image_as_np_array(image_path)
+IMAGE_RES = 224
+LABEL = "nom"
 
 
-	print("Hello")
+def get_birds_model():
+    URL = "https://tfhub.dev/google/aiy/vision/classifier/birds_V1/1"
+    bird_model = hub.KerasLayer(URL, input_shape=(IMAGE_RES, IMAGE_RES, 3))
+    bird_model.trainable = False
+    tf_model = tf.keras.Sequential([bird_model])
+    return tf_model
+
+
+if __name__ == "__main__":
+    model = get_birds_model()
+    labels = pd.read_csv(
+        "./data/labels_oiseaux.csv", sep=";", header=0, index_col=0
+    )  # file providing species in french, english and latin
+
+    for path, subdirs, files in os.walk(OBJECT_DETECTED_FOLDER):
+        for name in files:
+            if name.split(".")[0].split("_")[-1] == "bird":
+                image_path = os.path.join(path, name)
+                image_np = load_image_as_np_array(
+                    image_path, new_size=(IMAGE_RES, IMAGE_RES)
+                )
+
+                output = model.predict(image_np / 255.0)  # get prediction
+                prediction = np.argmax(tf.squeeze(output).numpy())
+                print(np.max(tf.squeeze(output).numpy()))
+                print((labels[LABEL][prediction]))

@@ -39,8 +39,10 @@ def load_image(path):
     return image
 
 
-def load_image_as_np_array(image_path):
+def load_image_as_np_array(image_path, new_size=None):
     image = load_image(path=image_path)
+    if new_size is not None:
+        image = image.resize(new_size)
     return convert_image_to_np_array(image)
 
 
@@ -50,6 +52,7 @@ def load_image_and_detect_objects(image_path, detection_model):
     detection_information = detection_model(image_np)
 
     return image_np, detection_information, image_name
+
 
 def save_np_array_as_jpeg(image_np, path):
     Image.fromarray(image_np).save(path)
