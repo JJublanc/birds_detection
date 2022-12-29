@@ -10,7 +10,7 @@ from six import BytesIO
 from six.moves.urllib.request import urlopen
 
 from config import IMAGES_WITH_DETECTION_FOLDER, INPUT_IMAGES_FOLDER
-from src.predict.utils_load_model import (
+from utils.images.utils_load_model import (
     COCO17_HUMAN_POSE_KEYPOINTS,
     category_index,
 )
@@ -35,7 +35,7 @@ def extract_metadata(image):
     return metadata
 
 
-def get_metadata_and_image_as_numpy_array(path):
+def load_image(path):
     if path.startswith("http"):
         response = urlopen(path)
         image_data = response.read()
@@ -44,17 +44,14 @@ def get_metadata_and_image_as_numpy_array(path):
     else:
         image_data = tf.io.gfile.GFile(path, "rb").read()
         image = Image.open(BytesIO(image_data))
+    return image
 
-    metadata = extract_metadata(image)
 
+def convert_image_to_np_array(image):
     (im_width, im_height) = image.size
-
-    return (
-        np.array(image.getdata())
-        .reshape((1, im_height, im_width, 3))
-        .astype(np.uint8),
-        metadata,
-    )
+    return np.array(image.getdata())\
+             .reshape((1, im_height, im_width, 3))\
+             .astype(np.uint8)
 
 
 def get_all_untreated_images_list() -> List:

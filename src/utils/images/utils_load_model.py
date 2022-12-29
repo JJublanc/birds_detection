@@ -99,7 +99,7 @@ category_index = label_map_util.create_category_index_from_labelmap(
     PATH_TO_LABELS, use_display_name=True
 )
 
-model_display_name = "CenterNet HourGlass104 Keypoints 512x512"
+MODEL_DISPLAY_NAME = "CenterNet HourGlass104 Keypoints 512x512"
 
 # @param ['CenterNet HourGlass104 512x512',
 # 'CenterNet HourGlass104 Keypoints 512x512',

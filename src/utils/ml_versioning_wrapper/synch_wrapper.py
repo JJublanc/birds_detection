@@ -40,7 +40,7 @@ def tracking_wrapper(func):
         #####################
         # Set mlflow params #
         #####################
-        mlflow.set_tracking_uri(tracking_uri)
+
         mlflow.set_experiment(wrapper_experiment_name)
 
         with mlflow.start_run():

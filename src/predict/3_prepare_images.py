@@ -11,7 +11,7 @@ from config import (
     METADATA_INFO_FOLDER,
     PREPARED_IMAGES,
 )
-from src.predict.utils_load_model import category_index
+from utils.images.utils_load_model import category_index
 
 
 def trim(im):
@@ -146,6 +146,9 @@ def get_image_information_and_transform_and_save_images():
 
 
 if __name__ == "__main__":
+
+    # metadata = extract_metadata(image)
+
     (
         object_detection_info,
         time_events_list,

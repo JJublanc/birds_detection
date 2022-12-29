@@ -7,9 +7,9 @@ from streamlit_timeline import st_timeline
 
 if __name__ == "__main__":
     object_detection_info = np.load(
-        "./app/object_detection_info.npy", allow_pickle=True
+        "./data/object_detection_info.npy", allow_pickle=True
     )
-    with open("app/time_events_list", "r") as f:
+    with open("data/time_events_list", "r") as f:
         time_events_list = json.load(f)
 
     st.set_page_config(layout="wide")

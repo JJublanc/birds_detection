@@ -19,7 +19,7 @@ best_model/
 results/
 preprocess/
 data_input/
-data_output/
+data/2_images_with_detection_boxes/
 map/
 models/
 
