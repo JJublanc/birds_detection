@@ -75,7 +75,7 @@ def tracking_wrapper(func):
                 commit_url = (
                     repo_url.split("@")[1].replace(":", "/").split(".")
                 )
-                commit_url = ".".join(commit_url[:2]) + "/-/commit/"
+                commit_url = ".".join(commit_url[:2]) + "/commit/"
                 commit_url = commit_url + str(repo.head.commit.hexsha)
                 mlflow.log_params({"commit url ": commit_url})
             except git.GitCommandError as e:

@@ -2,12 +2,8 @@ import os
 from typing import List
 
 import numpy as np
-import tensorflow as tf
 from object_detection.utils import visualization_utils as viz_utils
-from PIL import Image
 from PIL.ExifTags import TAGS
-from six import BytesIO
-from six.moves.urllib.request import urlopen
 
 from config import IMAGES_WITH_DETECTION_FOLDER, INPUT_IMAGES_FOLDER
 from utils.images.utils_load_model import (
@@ -33,18 +29,6 @@ def extract_metadata(image):
         metadata[tagname] = value
 
     return metadata
-
-
-def load_image(path):
-    if path.startswith("http"):
-        response = urlopen(path)
-        image_data = response.read()
-        image_data = BytesIO(image_data)
-        image = Image.open(image_data)
-    else:
-        image_data = tf.io.gfile.GFile(path, "rb").read()
-        image = Image.open(BytesIO(image_data))
-    return image
 
 
 def convert_image_to_np_array(image):
