@@ -20,3 +20,6 @@ if __name__=="__main__":
 
 	image_path = "/Users/johanjublanc/DataScienceProjects/birds_project/data/5_object_detected/test_oiseau/object_0_bird.png"
 	load_image_as_np_array(image_path)
+
+
+	print("Hello")
