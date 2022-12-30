@@ -1,4 +1,6 @@
 import os
+
+import mlflow
 import numpy as np
 import pandas as pd
 import tensorflow as tf
@@ -11,7 +13,7 @@ from src.utils.ml_versioning_wrapper.synch_wrapper import tracking_wrapper
 IMAGE_RES = 224
 LABEL = "nom"
 import numpy as np
-
+from src.utils.time.wrapper_timer import timer_wrapper
 
 # ref:
 # https://github.com/LaurentVeyssier/Bird_Classifier_Tensorflow_Colab_Notebook
@@ -45,7 +47,7 @@ def classify_object(object_folder,
 
 	return image_objects_info
 
-
+@timer_wrapper
 @tracking_wrapper
 def main_classify_birds():
 	model = get_birds_model()
@@ -72,7 +74,9 @@ def main_classify_birds():
 
 
 if __name__ == "__main__":
-	images_info_dict = main_classify_birds(experiment_branch="main",
+	images_info_dict, inference_params = main_classify_birds(experiment_branch="main",
 	                                       wrapper_experiment_name=
-	                                       "birds_classification")
+	                                       "birds_classification",
+	                                       timer_key="Model loading time")
+	mlflow.log_params(inference_params)
 	np.save("data/images_info", images_info_dict)
