@@ -14,7 +14,7 @@ IMAGE_RES = 224
 LABEL = "nom"
 import numpy as np
 from src.utils.time.wrapper_timer import timer_wrapper
-
+from config import IMAGE_INFO_FILE
 
 # ref:
 # https://github.com/LaurentVeyssier/Bird_Classifier_Tensorflow_Colab_Notebook
@@ -29,9 +29,9 @@ def get_birds_model():
 
 def classify_object(object_folder,
                     object_file,
-                    image_objects_info,
                     model,
                     labels):
+	image_objects_info = {}
 	object_image_path = os.path.join(object_folder, object_file)
 	image_np = load_image_as_np_array(
 		object_image_path, new_size=(IMAGE_RES, IMAGE_RES)
@@ -56,22 +56,20 @@ def main_classify_birds():
 		"./data/labels_oiseaux.csv", sep=";", header=0, index_col=0
 	)  # file providing species in french, english and latin
 
-	images_info_dict = np.load("data/images_info.npy",
+	images_info_dict = np.load(IMAGE_INFO_FILE + ".npy",
 	                           allow_pickle=True).item()
 	for image_name in images_info_dict.keys():
 		for object_folder, subdirs, files in os.walk(
 				os.path.join(OBJECT_DETECTED_FOLDER,
 				             image_name)):
-			image_objects_info = {}
-			for i, object_file in enumerate(files):
+			for object_file in files:
 				image_objects_info = classify_object(object_folder,
 				                                     object_file,
-				                                     image_objects_info,
 				                                     model,
 				                                     labels)
 
 				images_info_dict[image_name][
-					f"object_{i}"] = image_objects_info
+					object_file.split(".")[0]] = image_objects_info
 	return images_info_dict
 
 
@@ -88,4 +86,4 @@ if __name__ == "__main__":
 	                        "birds_classification"
 	                        )
 
-	np.save("data/images_info", images_info_dict)
+	np.save(IMAGE_INFO_FILE, images_info_dict)
