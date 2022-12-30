@@ -1,6 +1,5 @@
 import os
 from typing import List
-from PIL import Image
 import numpy as np
 from object_detection.utils import visualization_utils as viz_utils
 from PIL.ExifTags import TAGS
