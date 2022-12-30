@@ -78,6 +78,6 @@ if __name__ == "__main__":
 	images_info_dict, inference_params = main_classify_birds(experiment_branch="main",
 	                                       wrapper_experiment_name=
 	                                       "birds_classification",
-	                                       timer_key="Model loading time")
+	                                       timer_key="Inference time")
 	mlflow.log_params(inference_params)
 	np.save("data/images_info", images_info_dict)
