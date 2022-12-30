@@ -71,6 +71,7 @@ def main_classify_birds():
 
 				images_info_dict[image_name][
 					f"object_{i}"] = image_objects_info
+	return images_info_dict
 
 
 if __name__ == "__main__":
