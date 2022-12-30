@@ -77,7 +77,7 @@ def main_classify_birds():
 
 @tracking_wrapper
 def main():
-	images_info_dict, inference_params = main_classify_birds()
+	images_info_dict, inference_params = main_classify_birds(timer_key="Inference time")
 	mlflow.log_params(inference_params)
 	return images_info_dict
 
