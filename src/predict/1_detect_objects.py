@@ -98,7 +98,8 @@ def main_detect_object():
         save_detection_info_and_augmented_image(
             detection_information_dict=detection_information_dict,
             image_name=image_name,
-            image_path=image_path,
+            image_path=os.path.join(DETECTION_INFO_FOLDER, 
+                                    image_name + ".jpeg"),
             image_with_detection_information=image_with_detection_information,
         )
 
