@@ -27,7 +27,7 @@ def get_detections_outputs(
     return detection_information.item(), augmented_image
 
 
-def load_image(path, rotation_in_degrees=90):
+def load_image(path, rotation_in_degrees=-90):
     if path.startswith("http"):
         response = urlopen(path)
         image_data = response.read()

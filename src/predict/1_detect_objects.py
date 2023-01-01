@@ -12,9 +12,13 @@ from src.utils.ml_versioning_wrapper.synch_wrapper import tracking_wrapper
 from src.utils.time.wrapper_timer import timer_wrapper
 from utils.images.utils_handle_images import (
     add_detection_info_to_image,
-    get_all_untreated_images_list,
+    get_all_untreated_images_list
 )
-from utils.images.utils_load_and_save import load_image_and_detect_objects
+from utils.images.utils_load_and_save import (
+    load_image_and_detect_objects,
+    save_np_array_as_jpeg
+)
+
 from utils.images.utils_load_model import ALL_MODELS, MODEL_DISPLAY_NAME
 
 tf.get_logger().setLevel("ERROR")
@@ -53,9 +57,9 @@ def save_detection_info_and_augmented_image(
     image_path,
     image_with_detection_information,
 ):
-    save_image_with_detection_information(
-        image=image_with_detection_information[0],
-        input_image_path=image_path,
+    save_np_array_as_jpeg(
+        image_np=image_with_detection_information[0],
+        path=image_path,
     )
 
     save_detection_information(
