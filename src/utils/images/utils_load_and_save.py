@@ -27,15 +27,15 @@ def get_detections_outputs(
     return detection_information.item(), augmented_image
 
 
-def load_image(path):
+def load_image(path, rotation_in_degrees=90):
     if path.startswith("http"):
         response = urlopen(path)
         image_data = response.read()
         image_data = BytesIO(image_data)
-        image = Image.open(image_data)
+        image = Image.open(image_data).rotate(rotation_in_degrees)
     else:
         image_data = tf.io.gfile.GFile(path, "rb").read()
-        image = Image.open(BytesIO(image_data))
+        image = Image.open(BytesIO(image_data)).rotate(rotation_in_degrees)
     return image
 
 
