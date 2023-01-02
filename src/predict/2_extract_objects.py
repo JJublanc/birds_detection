@@ -1,6 +1,4 @@
 import os
-
-import matplotlib.pyplot as plt
 import mlflow
 import numpy as np
 
