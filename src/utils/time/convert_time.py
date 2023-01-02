@@ -9,8 +9,8 @@ def get_date_from_string(s_date):
         "%d-%m-%Y",
     ]
 
-    for pattern in date_patterns:
-        try:
+    try:
+        for pattern in date_patterns:
             return datetime.strptime(s_date, pattern)
-        except ValueError:
-            print("Date is not in expected format: %s" % (s_date))
+    except ValueError:
+        print(f"Date {s_date} not in expected format: %s")
