@@ -7,6 +7,9 @@ from config import (
 	IMAGES_WITH_DETECTION_FOLDER,
 	INPUT_IMAGES_FOLDER,
 	OBJECT_DETECTED_FOLDER,
+	OBJECT_DETECTION_THRESHOLD,
+	MARGIN_X,
+	MARGIN_Y
 )
 
 from src.utils.images.utils_load_and_save import (
@@ -23,7 +26,8 @@ from utils.images.utils_load_model import category_index
 def save_objects_detected_in_image(
 		detection_information, image_np, image_name
 ):
-	score_indices = detection_information["detection_scores"] > 0.6
+	score_indices = detection_information["detection_scores"] > \
+	                OBJECT_DETECTION_THRESHOLD
 	boxes = detection_information["detection_boxes"][:, score_indices[0], :]
 	scale = np.concatenate(
 		(image_np.shape[1:3], image_np.shape[1:3]), axis=None
@@ -39,12 +43,14 @@ def save_objects_detected_in_image(
 		score_indices[0]
 	]
 	labels_names = [category_index[i]["name"] for i in labels_values]
-
+	size = image_np.shape
 	for i in range(boxes_int.shape[0]):
 		image_focus = image_np[
 		              :,
-		              boxes_int[i][0]: boxes_int[i][2],
-		              boxes_int[i][1]: boxes_int[i][3],
+		              max(boxes_int[i][0] - MARGIN_Y, 0):
+		              min(boxes_int[i][2] + MARGIN_Y, size[1]),
+		              max(boxes_int[i][1] - MARGIN_X, 0):
+		              min(boxes_int[i][3] + MARGIN_X, size[2]),
 		              :,
 		              ][0]
 

@@ -25,16 +25,6 @@ tf.get_logger().setLevel("ERROR")
 MODEL_HANDLE = ALL_MODELS[MODEL_DISPLAY_NAME]
 
 
-# TODO: replace with def save_np_array_as_jpeg function in utils
-def save_image_with_detection_information(image, input_image_path):
-    plt.figure(figsize=(48, 64))
-    plt.imshow(image)
-    plt.savefig(
-        os.path.join(
-            IMAGES_WITH_DETECTION_FOLDER, input_image_path.split("/")[-1]
-        )
-    )
-
 def save_detection_information(information, image_name):
     np.save(
         os.path.join(

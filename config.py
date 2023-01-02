@@ -6,3 +6,7 @@ PREPARED_IMAGES = "./data/6_prepared_images_for_dashboard"
 OBJECT_DETECTED_FOLDER = "./data/5_object_detected"
 TRACKING_URI = "./"
 IMAGE_INFO_FILE = "data/images_info"
+OBJECT_DETECTION_THRESHOLD = 0.2
+MARGIN_X = 20
+MARGIN_Y = 20
+
