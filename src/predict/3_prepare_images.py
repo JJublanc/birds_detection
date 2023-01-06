@@ -8,6 +8,7 @@ from config import (
 	DETECTION_INFO_FOLDER,
 	IMAGES_WITH_DETECTION_FOLDER,
 	PREPARED_IMAGES,
+MAIN_FOLDER
 )
 from utils.images.utils_load_model import category_index
 from config import INPUT_IMAGES_FOLDER
@@ -16,6 +17,7 @@ from src.utils.images.utils_load_and_save import load_image
 from src.utils.time.convert_time import get_date_from_string
 
 # TODO : clean the way path are handled
+
 
 def trim(im):
 	bg = Image.new(im.mode, im.size, im.getpixel((0, 0)))
@@ -138,4 +140,4 @@ def extract_images_info():
 
 if __name__ == "__main__":
 	images_info = extract_images_info()
-	np.save("data/images_info", images_info)
+	np.save(os.path.join(MAIN_FOLDER,"images_info"), images_info)
