@@ -1,0 +1,7 @@
+BEST_MODEL_PATH = "./best_model"
+BEST_METRIC = "val_accuracy"
+
+IMG_HEIGHT = 200
+IMG_WIDTH = 200
+BATCH_SIZE = 32
+NUM_EPOCH = 2

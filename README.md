@@ -2,6 +2,13 @@
 
 Source : https://www.tensorflow.org/hub/tutorials/tf2_object_detection
 
+# Get birds dataset
+
+```
+kaggle datasets download -d gpiosenka/100-bird-species 
+unzip 100-bird-species.zip -d data/7_training_birds_dataset
+```
+
 ## Getting started
 requirement : poetry, pyenv
 ```
