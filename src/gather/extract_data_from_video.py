@@ -5,13 +5,10 @@ import cv2
 import piexif
 from PIL import Image
 
-from config import INPUT_IMAGES_FOLDER, MAIN_FOLDER
-
-DATA_PATH = "data_video"
-VIDEO_PATH = os.path.join(MAIN_FOLDER, "video/birds_video.mp4")
+from config import INPUT_IMAGES_FOLDER, VIDEO_PATH
 
 
-def extract(period=50):
+def extract(period=200):
     video = cv2.VideoCapture(VIDEO_PATH)
     success = True
     count = 0
